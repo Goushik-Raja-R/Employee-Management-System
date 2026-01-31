@@ -4,24 +4,31 @@ const UserModel = require('../models/User.models')
 module.exports.protect = async (req,res,next)=>{
 
     try{
+        const authHeader = req.headers.authorization;
 
-        let token;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized"
+            });
+        }
 
-        if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
-            token = req.headers.authorization.split(" ")[1];
-            }
+        const token = authHeader.split(" ")[1];
 
-            console.log(token);
+        console.log(token);
+
 
         if(!token){
             return res.status(401).json({ message: "No token" });
         }
 
-        const payload = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
+        const payload = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET);
 
-        console.log("Server Time:", Math.floor(Date.now() / 1000));
-        console.log("Token Exp :", payload.exp);
-
+        if(!payload.userId){
+            return res.status(401).json({
+                message:"Invalid token payload"
+            })
+        }
 
         const user = await UserModel.findById(payload.userId);
 

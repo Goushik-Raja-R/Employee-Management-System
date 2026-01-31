@@ -61,7 +61,6 @@ module.exports.RegisterUser = async(req,res)=>{
     }
 }
 
-
 module.exports.LoginUser = async(req,res)=>{
     try{
 
@@ -85,7 +84,7 @@ module.exports.LoginUser = async(req,res)=>{
 
         const accesstoken = jwt.sign(
             {
-            userId:user._id,
+            userId:user._id.toString(),
             role:user.role
             },
             process.env.ACCESS_TOKEN_SECRET,
@@ -135,7 +134,7 @@ module.exports.Refresh = async(req,res)=>{
 
     try{
 
-        const token = req.cookie.refreshtoken;
+        const token = req.cookies.refreshtoken;
 
         if(!token){
             return res.status(401).json({
@@ -145,7 +144,7 @@ module.exports.Refresh = async(req,res)=>{
 
         const payload = jwt.verify(token,process.env.REFRESH_TOKEN_SECRET);
 
-        const StoredToken = await Refreshtoken.findOne({token});
+        const StoredToken = await RefreshToken.findOne({token});
         
         if(!StoredToken || StoredToken.isRevoked){
             return res.status(401).json({
@@ -159,7 +158,6 @@ module.exports.Refresh = async(req,res)=>{
             },
             process.env.ACCESS_TOKEN_SECRET,
             {expiresIn:"15m"}
-
         )
 
         return res.json({"AccessToken":newAccessToken});
