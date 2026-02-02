@@ -1,5 +1,4 @@
 require('dotenv').config();
-console.log("ENV CHECK:", process.env.ACCESS_TOKEN_SECRET);
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -9,6 +8,7 @@ const cookieparser = require('cookie-parser')
 
 const Employeeroutes = require('./routes/Employee.routes');
 const VerifyUser = require('./routes/Auth.routes');
+const TeamLead = require('./routes/Tl.routes');
 
 mongoose.connect('mongodb://127.0.0.1:27017/Fifty_Fourth_Batch');
 const db = mongoose.connection
@@ -37,6 +37,7 @@ app.listen(PORT,()=>{
 })
 
 app.use('/api',Employeeroutes);
-app.use('/api/auth',VerifyUser)
+app.use('/api/auth',VerifyUser);
+app.use('/api/TL',TeamLead);
 
 // console.log("JWT_SECRET ",process.env.JWT_SECRET);

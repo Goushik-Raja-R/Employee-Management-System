@@ -88,7 +88,7 @@ module.exports.LoginUser = async(req,res)=>{
             role:user.role
             },
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: "15m"}
+            {expiresIn: "10m"}
         );
 
         const refreshtoken = jwt.sign(
@@ -154,7 +154,7 @@ module.exports.Refresh = async(req,res)=>{
 
         const newAccessToken = jwt.sign(
             {
-                userId:payload.UserId
+                userId:payload.userId
             },
             process.env.ACCESS_TOKEN_SECRET,
             {expiresIn:"15m"}
@@ -167,4 +167,49 @@ module.exports.Refresh = async(req,res)=>{
             message:"Token expired or Invalid"
         })
     }
+}
+
+
+module.exports.Logout = async(req,res)=>{
+
+    try{
+
+        const token = req.cookies.refreshtoken;
+
+        if(!token){
+            return res.status(401).json({
+                message:"No refresh token"
+            })
+        }
+
+        const storedtoken = await RefreshToken.findOne({token});
+
+        console.log(storedtoken.isRevoked);
+
+        if(storedtoken){
+            storedtoken.isRevoked = true,
+            await storedtoken.save();
+        }
+
+        console.log(storedtoken.isRevoked);
+
+        res.clearCookie("refreshtoken",
+            {
+                httpOnly: true,
+                sameSite: "strict"
+            })
+
+        return res.status(200).json({
+            success:true,
+            message:"User Logout Successfully"
+        })
+
+    }
+    catch(error){
+        return res.status(401),json({
+            message: "Logout failed",
+            error: error.message
+        })
+    }
+
 }

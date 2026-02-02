@@ -45,33 +45,33 @@ module.exports.GetEmployeeByID= async(req,res)=>{
 };
 
 
-module.exports.CreateEmployee = async(req,res)=>{
+// module.exports.CreateEmployee = async(req,res)=>{
     
-    try{
-        const NewWorkingHC = new EmployeeModel({
-            name:req.body.name,
-            empid:req.body.empid,
-            designation:req.body.designation,
-            phonenumber:req.body.phonenumber,
-            age:req.body.age
-        })
+//     try{
+//         const NewWorkingHC = new EmployeeModel({
+//             name:req.body.name,
+//             empid:req.body.empid,
+//             designation:req.body.designation,
+//             phonenumber:req.body.phonenumber,
+//             age:req.body.age
+//         })
 
-        const NewHC = await NewWorkingHC.save();
+//         const NewHC = await NewWorkingHC.save();
 
-        res.status(201).json({
-            success:true,
-            message:"New HC Created Successfully",
-            data:NewHC
-        })
-    }
-    catch(error){
-        res.status(400).json({
-            success:false,
-            message:"Error while creating Working HC",
-            error:error.message
-        })
-    }
-}
+//         res.status(201).json({
+//             success:true,
+//             message:"New HC Created Successfully",
+//             data:NewHC
+//         })
+//     }
+//     catch(error){
+//         res.status(400).json({
+//             success:false,
+//             message:"Error while creating Working HC",
+//             error:error.message
+//         })
+//     }
+// }
 
 
 module.exports.UpdateEmployeeByID = async(req,res)=>{

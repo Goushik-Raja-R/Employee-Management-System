@@ -17,10 +17,10 @@ router.get('/GetEmployeeByID',
     EmployeeController.GetEmployeeByID);
 
 
-router.post('/CreateEmployee',
-    Authenticate.protect,
-    Authorize.authorize("MANAGER"),
-    EmployeeController.CreateEmployee);
+// router.post('/CreateEmployee',
+//     Authenticate.protect,
+//     Authorize.authorize("MANAGER"),
+//     EmployeeController.CreateEmployee);
 
 
 router.delete('/DeleteEmployee',
