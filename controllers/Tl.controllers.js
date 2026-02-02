@@ -13,7 +13,7 @@ module.exports.GetAllTL = async(req,res)=>{
             })
         }
 
-        return res.status(200),json({
+        return res.status(200).json({
             success:true,
             count:data.length,
             data:data
