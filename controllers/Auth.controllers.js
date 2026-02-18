@@ -11,7 +11,7 @@ module.exports.RegisterUser = async(req,res)=>{
 
     try{
 
-    const{ email,password,role,name} = req.body;
+    const{ email,password,role,name,roleRef} = req.body;
 
     const ExistingUser = await User.findOne({email});
 
@@ -25,14 +25,14 @@ module.exports.RegisterUser = async(req,res)=>{
     let roleDoc;
 
     if(role === "MANAGER"){
-        const {department} = req.body;
-        roleDoc = await Manager.create({name:name,department});
+        const {department,managerCode,phoneNumber,isActive} = req.body;
+        roleDoc = await Manager.create({name:name,department,managerCode,phoneNumber,isActive});
     }else if(role === "TL"){
-        const {managerId} = req.body;
-        roleDoc = await Tl.create({name:name,managerId});
+        const {managerId,tlCode,phoneNumber,teamName,isActive} = req.body;
+        roleDoc = await Tl.create({name:name,managerId,tlCode,phoneNumber,teamName,isActive});
     }else if(role === "EMPLOYEE"){
-        const {TlId,employeeCode} = req.body;
-        roleDoc = await Employee.create({name:name,TlId,employeeCode});
+        const {TlId,employeeCode,designation,phoneNumber,dateOfJoining,isActive} = req.body;
+        roleDoc = await Employee.create({name:name,TlId,employeeCode,designation,phoneNumber,dateOfJoining,isActive});
     }else{
         return res.status(400).json(
             {message:"Invalid role"})
@@ -46,7 +46,8 @@ module.exports.RegisterUser = async(req,res)=>{
         email:email,
         password:HashPassword,
         role:role,
-        refId:roleDoc._id
+        refId:roleDoc._id,
+        roleRef:roleRef
     })
 
     return res.status(201).json(

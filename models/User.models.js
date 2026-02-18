@@ -21,6 +21,11 @@ const UserSchema = new schema({
     refId:{
         type: mongoose.Schema.Types.ObjectId,
         required: true
+    },
+    roleRef:{
+        type:String,
+        required:true,
+        enum:['Manager','Tl','Employee']
     }
 },{ timestamps: true });
 

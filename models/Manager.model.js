@@ -11,6 +11,18 @@ const managerSchema = new schema({
         type:String,
         required:true,
         default: "GENERAL"
+    },
+    managerCode:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    phoneNumber:{
+        type:String
+    },
+    isActive:{
+        type:Boolean,
+        default:true
     }
 },{timestamps:true});
 

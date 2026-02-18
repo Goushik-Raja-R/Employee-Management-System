@@ -10,14 +10,20 @@ module.exports.ValidateRegistration = async (req,res,next)=>{
         password,
         role,
         name,
+        roleRef,
         department,
         managerId,
         TlId,
-        employeeCode} = req.body;
+        managerCode,
+        tlCode,
+        teamName,
+        phoneNumber,
+        employeeCode,
+        isActibe} = req.body;
 
-        if((!email)||(!password)||(!role)||(!name)){
+        if((!email)||(!password)||(!role)||(!name)||(!roleRef)){
             return res.status(400).json({
-                message:"EMAIL - PASSWORD - ROLE - NAME fields are require"
+                message:"EMAIL - PASSWORD - ROLE - NAME - roleRef fields are require"
             })
         }
 
@@ -77,7 +83,6 @@ module.exports.ValidateRegistration = async (req,res,next)=>{
              });
             }
         }
-
         next();
 }
 

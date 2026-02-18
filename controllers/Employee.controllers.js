@@ -12,7 +12,7 @@ module.exports.GetAllEmployee = async(req,res)=>{
     }catch(error){
         res.status(500).json({
             success:false,
-            message:'There is no Working HC data',
+            message:'Employee Database is Empty',
             error:error.message
         });
     }
@@ -43,35 +43,6 @@ module.exports.GetEmployeeByID= async(req,res)=>{
         });
     }
 };
-
-
-// module.exports.CreateEmployee = async(req,res)=>{
-    
-//     try{
-//         const NewWorkingHC = new EmployeeModel({
-//             name:req.body.name,
-//             empid:req.body.empid,
-//             designation:req.body.designation,
-//             phonenumber:req.body.phonenumber,
-//             age:req.body.age
-//         })
-
-//         const NewHC = await NewWorkingHC.save();
-
-//         res.status(201).json({
-//             success:true,
-//             message:"New HC Created Successfully",
-//             data:NewHC
-//         })
-//     }
-//     catch(error){
-//         res.status(400).json({
-//             success:false,
-//             message:"Error while creating Working HC",
-//             error:error.message
-//         })
-//     }
-// }
 
 
 module.exports.UpdateEmployeeByID = async(req,res)=>{
@@ -164,6 +135,4 @@ module.exports.DeleteAllEmployee = async(req,res)=>{
             error:error.message
         })
     }
-
-
 }

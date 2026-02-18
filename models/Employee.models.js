@@ -15,6 +15,26 @@ const EmployeeSchema = new schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"TL",
         required:true
+    },
+    designation:{
+        type:String,
+        required:true
+    },
+    phoneNumber:{
+        type:String,
+        required:true
+    },
+    dateOfJoining:{
+        type:Date,
+        default:Date.now
+    },
+    dateOfExit: {
+        type: Date,
+        default: null
+    },
+    isActive:{
+        type:Boolean,
+        default:true
     }
 },{timestamps:true})
 
